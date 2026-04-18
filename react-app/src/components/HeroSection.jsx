@@ -1,4 +1,3 @@
-import { Play } from 'lucide-react'
 import { formatCurrency } from '../utils/analytics'
 
 export default function HeroSection({ monthLabel, totalSpend }) {
@@ -24,16 +23,6 @@ export default function HeroSection({ monthLabel, totalSpend }) {
         </div>
       </div>
 
-      <div className="relative mt-8 overflow-hidden rounded-2xl border border-white/10">
-        <div className="aspect-video w-full bg-gradient-to-br from-[#1f1f1f] via-[#0d0d0d] to-[#050505]" />
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="flex items-center gap-3 rounded-full border border-white/20 bg-black/40 px-4 py-2 text-sm text-brand-muted">
-            <Play className="h-4 w-4 text-brand-primary" />
-            App overview video
-          </div>
-        </div>
-      </div>
     </section>
   )
 }
