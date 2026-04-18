@@ -1,6 +1,7 @@
 import { useMemo, useState, useEffect } from 'react'
 import Header from './components/Header'
 import HeroSection from './components/HeroSection'
+import VideoSection from './components/VideoSection'
 import ExpenseForm from './components/ExpenseForm'
 import CategoryFilter from './components/CategoryFilter'
 import ExpenseList from './components/ExpenseList'
@@ -123,9 +124,11 @@ export default function App() {
 
       <main className="mx-auto max-w-6xl px-4 pb-16">
         <HeroSection monthLabel={currentMonthLabel} totalSpend={totalSpend} />
+        <VideoSection />
 
-        <div className="mt-10 grid gap-8 lg:grid-cols-[1.1fr_0.9fr]">
+        <div className="mt-10 grid gap-8 lg:grid-cols-[1.3fr_0.7fr]">
           <div className="space-y-6">
+            <h2 className="text-lg font-semibold">Add new expense</h2>
             <ExpenseForm
               categories={categories}
               onSubmit={handleSaveExpense}
