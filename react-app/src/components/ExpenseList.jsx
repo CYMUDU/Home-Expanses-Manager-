@@ -1,21 +1,51 @@
-import ExpenseCard from './ExpenseCard'
-
 export default function ExpenseList({ expenses, onDelete, onEdit }) {
   return (
-    <section className="rounded-2xl border border-slate-800 bg-slate-900/60 p-5 shadow-xl">
-      <div className="flex items-center justify-between">
-        <h2 className="text-lg font-semibold">Expenses</h2>
-        <span className="text-sm text-slate-400">{expenses.length} items</span>
+    <section>
+      <div className="mb-4 flex items-center justify-between">
+        <div>
+          <h2 className="text-lg font-semibold">Recent Activity</h2>
+          <p className="text-sm text-brand-muted">Latest expense entries</p>
+        </div>
+        <span className="text-xs text-brand-muted">{expenses.length} items</span>
       </div>
 
-      <div className="mt-4 grid gap-3">
+      <div className="space-y-3">
         {expenses.length === 0 ? (
-          <div className="rounded-xl border border-dashed border-slate-700 p-6 text-center text-sm text-slate-400">
+          <div className="rounded-xl border border-white/10 bg-brand-surface/70 p-6 text-center text-sm text-brand-muted">
             No expenses match your filters yet.
           </div>
         ) : (
           expenses.map(exp => (
-            <ExpenseCard key={exp.id} expense={exp} onDelete={onDelete} onEdit={onEdit} />
+            <div
+              key={exp.id}
+              className="flex flex-wrap items-center justify-between gap-4 rounded-xl border border-white/10 bg-brand-surface/80 px-4 py-3"
+            >
+              <div>
+                <p className="font-semibold text-brand-text">{exp.name}</p>
+                <p className="text-xs text-brand-muted">{exp.date}</p>
+              </div>
+              <span className="rounded-full bg-emerald-500/15 px-3 py-1 text-xs font-semibold text-emerald-300">
+                {exp.category}
+              </span>
+              <div className="text-right">
+                <p className="text-sm font-semibold">${Number(exp.amount).toFixed(2)}</p>
+                {exp.member && <p className="text-xs text-brand-muted">{exp.member}</p>}
+              </div>
+              <div className="flex gap-2">
+                <button
+                  className="rounded-full border border-white/10 px-3 py-1 text-xs text-brand-muted hover:text-brand-text"
+                  onClick={() => onEdit(exp)}
+                >
+                  Edit
+                </button>
+                <button
+                  className="rounded-full border border-rose-500/40 px-3 py-1 text-xs text-rose-300 hover:text-rose-200"
+                  onClick={() => onDelete(exp.id)}
+                >
+                  Delete
+                </button>
+              </div>
+            </div>
           ))
         )}
       </div>

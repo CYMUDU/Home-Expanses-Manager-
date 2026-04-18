@@ -1,10 +1,11 @@
 import { useMemo, useState, useEffect } from 'react'
 import Header from './components/Header'
+import HeroSection from './components/HeroSection'
 import ExpenseForm from './components/ExpenseForm'
 import CategoryFilter from './components/CategoryFilter'
 import ExpenseList from './components/ExpenseList'
-import SpendingChart from './components/SpendingChart'
-import FamilyPanel from './components/FamilyPanel'
+import DashboardAnalytics from './components/DashboardAnalytics'
+import Footer from './components/Footer'
 import { categories } from './utils/categories'
 import { getMonthKey, getMonthLabel, getLastSixMonths } from './utils/date'
 import { sumTotal, sumByCategory, sumByMonth } from './utils/analytics'
@@ -117,11 +118,13 @@ export default function App() {
   const trendData = sumByMonth(expenses, getLastSixMonths())
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100">
-      <div className="mx-auto max-w-6xl px-4 pb-16 pt-10">
-        <Header monthLabel={currentMonthLabel} totalSpend={totalSpend} />
+    <div className="min-h-screen bg-brand-bg text-brand-text">
+      <Header />
 
-        <div className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
+      <main className="mx-auto max-w-6xl px-4 pb-16">
+        <HeroSection monthLabel={currentMonthLabel} totalSpend={totalSpend} />
+
+        <div className="mt-10 grid gap-8 lg:grid-cols-[1.1fr_0.9fr]">
           <div className="space-y-6">
             <ExpenseForm
               categories={categories}
@@ -131,23 +134,26 @@ export default function App() {
             />
 
             {recurringSuggestions.length > 0 && (
-              <div className="rounded-2xl border border-slate-800 bg-slate-900/60 p-5 shadow-xl">
+              <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-brand-surface/90 p-5 shadow-xl">
+                <div className="pointer-events-none absolute -top-10 right-6 h-24 w-24 rounded-full bg-brand-primary/20 blur-3xl" />
                 <h3 className="text-lg font-semibold">Recurring suggestions</h3>
-                <p className="mt-1 text-sm text-slate-400">
+                <p className="mt-1 text-sm text-brand-muted">
                   One-click re-entry for items marked as recurring this month.
                 </p>
                 <div className="mt-4 grid gap-3">
                   {recurringSuggestions.map(item => (
                     <div
                       key={item.recurringId}
-                      className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-slate-800/70 bg-slate-950/40 px-4 py-3"
+                      className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-white/10 bg-brand-bg/60 px-4 py-3"
                     >
                       <div>
                         <p className="font-medium">{item.name}</p>
-                        <p className="text-xs text-slate-400">{item.category} · ${Number(item.amount).toFixed(2)}</p>
+                        <p className="text-xs text-brand-muted">
+                          {item.category} · ${Number(item.amount).toFixed(2)}
+                        </p>
                       </div>
                       <button
-                        className="rounded-full bg-emerald-500/90 px-4 py-1 text-sm font-semibold text-slate-950 transition hover:bg-emerald-400"
+                        className="rounded-full bg-brand-primary px-4 py-1 text-sm font-semibold text-brand-bg transition hover:brightness-110"
                         onClick={() => handleAddRecurring(item)}
                       >
                         Add
@@ -163,27 +169,28 @@ export default function App() {
               filters={filters}
               onChange={setFilters}
             />
-
-            <ExpenseList
-              expenses={filteredExpenses}
-              onDelete={handleDelete}
-              onEdit={setEditingExpense}
-            />
           </div>
 
-          <div className="space-y-6">
-            <SpendingChart
-              chartData={chartData}
-              trendData={trendData}
-            />
-            <FamilyPanel
-              totalSpend={totalSpend}
-              familySize={familySize}
-              onFamilySizeChange={setFamilySize}
-            />
-          </div>
+          <DashboardAnalytics
+            chartData={chartData}
+            trendData={trendData}
+            totalSpend={totalSpend}
+            familySize={familySize}
+            onFamilySizeChange={setFamilySize}
+            monthLabel={currentMonthLabel}
+          />
         </div>
-      </div>
+
+        <div className="mt-10">
+          <ExpenseList
+            expenses={filteredExpenses}
+            onDelete={handleDelete}
+            onEdit={setEditingExpense}
+          />
+        </div>
+      </main>
+
+      <Footer />
     </div>
   )
 }

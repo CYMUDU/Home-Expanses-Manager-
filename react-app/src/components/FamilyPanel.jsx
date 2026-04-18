@@ -6,23 +6,23 @@ export default function FamilyPanel({ totalSpend, familySize, onFamilySizeChange
   const perPersonDaily = familySize > 0 ? totalSpend / familySize / daysInMonth : 0
 
   return (
-    <section className="rounded-2xl border border-slate-800 bg-slate-900/60 p-6 shadow-xl">
+    <section className="rounded-2xl border border-white/10 bg-brand-surface/80 p-5 shadow-xl">
       <h2 className="text-lg font-semibold">Family overview</h2>
-      <p className="mt-1 text-sm text-slate-400">Track per-person daily spend.</p>
+      <p className="text-sm text-brand-muted">Track per-person daily spend.</p>
 
       <div className="mt-4 flex items-center gap-3">
-        <label className="text-sm text-slate-300">Family size</label>
+        <label className="text-sm text-brand-muted">Family size</label>
         <input
           type="number"
           min={1}
           value={familySize}
           onChange={event => onFamilySizeChange(Number(event.target.value) || 1)}
-          className="w-20 rounded-lg border border-slate-800 bg-slate-950/60 px-3 py-1 text-sm"
+          className="w-20 rounded-lg bg-[#262626] px-3 py-1 text-sm text-brand-text"
         />
       </div>
 
-      <div className="mt-6 rounded-xl border border-slate-800/70 bg-slate-950/40 p-4">
-        <p className="text-xs uppercase tracking-wide text-slate-400">Per-person daily average</p>
+      <div className="mt-6 rounded-xl border border-white/10 bg-brand-bg/60 p-4">
+        <p className="text-xs uppercase tracking-wide text-brand-muted">Per-person daily average</p>
         <p className="text-2xl font-semibold">{formatCurrency(perPersonDaily)}</p>
       </div>
     </section>
