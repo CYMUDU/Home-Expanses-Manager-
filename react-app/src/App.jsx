@@ -124,64 +124,67 @@ export default function App() {
 
       <main className="mx-auto max-w-6xl px-4 pb-16">
         <HeroSection monthLabel={currentMonthLabel} totalSpend={totalSpend} />
-        <VideoSection />
 
-        <div className="mt-10 grid gap-8 lg:grid-cols-[1.3fr_0.7fr]">
-          <div className="space-y-6">
-            <h2 className="text-lg font-semibold">Add new expense</h2>
-            <ExpenseForm
-              categories={categories}
-              onSubmit={handleSaveExpense}
-              editingExpense={editingExpense}
-              onCancelEdit={() => setEditingExpense(null)}
-            />
-
-            {recurringSuggestions.length > 0 && (
-              <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-brand-surface/90 p-5 shadow-xl">
-                <div className="pointer-events-none absolute -top-10 right-6 h-24 w-24 rounded-full bg-brand-primary/20 blur-3xl" />
-                <h3 className="text-lg font-semibold">Recurring suggestions</h3>
-                <p className="mt-1 text-sm text-brand-muted">
-                  One-click re-entry for items marked as recurring this month.
-                </p>
-                <div className="mt-4 grid gap-3">
-                  {recurringSuggestions.map(item => (
-                    <div
-                      key={item.recurringId}
-                      className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-white/10 bg-brand-bg/60 px-4 py-3"
-                    >
-                      <div>
-                        <p className="font-medium">{item.name}</p>
-                        <p className="text-xs text-brand-muted">
-                          {item.category} · ${Number(item.amount).toFixed(2)}
-                        </p>
-                      </div>
-                      <button
-                        className="rounded-full bg-brand-primary px-4 py-1 text-sm font-semibold text-brand-bg transition hover:brightness-110"
-                        onClick={() => handleAddRecurring(item)}
-                      >
-                        Add
-                      </button>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            <CategoryFilter
-              categories={categories}
-              filters={filters}
-              onChange={setFilters}
+        <div className="mt-10 grid gap-10 lg:grid-cols-[0.85fr_1.15fr]">
+          <div className="order-2 lg:order-1">
+            <DashboardAnalytics
+              chartData={chartData}
+              trendData={trendData}
+              totalSpend={totalSpend}
+              familySize={familySize}
+              onFamilySizeChange={setFamilySize}
+              monthLabel={currentMonthLabel}
             />
           </div>
 
-          <DashboardAnalytics
-            chartData={chartData}
-            trendData={trendData}
-            totalSpend={totalSpend}
-            familySize={familySize}
-            onFamilySizeChange={setFamilySize}
-            monthLabel={currentMonthLabel}
-          />
+          <div className="order-1 lg:order-2">
+            <div className="mx-auto w-full max-w-2xl space-y-6">
+              <h2 className="text-center text-lg font-semibold lg:text-left">Add new expense</h2>
+              <ExpenseForm
+                categories={categories}
+                onSubmit={handleSaveExpense}
+                editingExpense={editingExpense}
+                onCancelEdit={() => setEditingExpense(null)}
+              />
+
+              {recurringSuggestions.length > 0 && (
+                <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-brand-surface/90 p-5 shadow-xl">
+                  <div className="pointer-events-none absolute -top-10 right-6 h-24 w-24 rounded-full bg-brand-primary/20 blur-3xl" />
+                  <h3 className="text-lg font-semibold">Recurring suggestions</h3>
+                  <p className="mt-1 text-sm text-brand-muted">
+                    One-click re-entry for items marked as recurring this month.
+                  </p>
+                  <div className="mt-4 grid gap-3">
+                    {recurringSuggestions.map(item => (
+                      <div
+                        key={item.recurringId}
+                        className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-white/10 bg-brand-bg/60 px-4 py-3"
+                      >
+                        <div>
+                          <p className="font-medium">{item.name}</p>
+                          <p className="text-xs text-brand-muted">
+                            {item.category} · ${Number(item.amount).toFixed(2)}
+                          </p>
+                        </div>
+                        <button
+                          className="rounded-full bg-brand-primary px-4 py-1 text-sm font-semibold text-brand-bg transition hover:brightness-110"
+                          onClick={() => handleAddRecurring(item)}
+                        >
+                          Add
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              <CategoryFilter
+                categories={categories}
+                filters={filters}
+                onChange={setFilters}
+              />
+            </div>
+          </div>
         </div>
 
         <div className="mt-10">
@@ -191,6 +194,8 @@ export default function App() {
             onEdit={setEditingExpense}
           />
         </div>
+
+        <VideoSection />
       </main>
 
       <Footer />
