@@ -128,7 +128,6 @@ export default function App() {
 
         <div className="mt-10 grid gap-8 lg:grid-cols-[1.3fr_0.7fr]">
           <div className="space-y-6">
-            <h2 className="text-lg font-semibold">Add new expense</h2>
             <ExpenseForm
               categories={categories}
               onSubmit={handleSaveExpense}
